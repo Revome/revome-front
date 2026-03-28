@@ -1,5 +1,6 @@
 import React from "react";
-import { View, Text, SafeAreaView, ScrollView } from "react-native";
+import { View, Text, ScrollView } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { EmptyState } from "@/components/placeholders/EmptyState";
 import { Colors } from "@/constants/colors";
 

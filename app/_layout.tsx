@@ -4,6 +4,7 @@ import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Colors } from "@/constants/colors";
 import "../global.css";
 
@@ -38,12 +39,14 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={RevomeTheme}>
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="(tabs)" />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="light" backgroundColor={Colors.background} />
-    </ThemeProvider>
+    <SafeAreaProvider>
+      <ThemeProvider value={RevomeTheme}>
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="(tabs)" />
+          <Stack.Screen name="+not-found" />
+        </Stack>
+        <StatusBar style="light" backgroundColor={Colors.background} />
+      </ThemeProvider>
+    </SafeAreaProvider>
   );
 }

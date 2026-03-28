@@ -1,10 +1,6 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  SafeAreaView,
-  Alert,
-} from "react-native";
+import { View, Text, Alert } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import * as ImagePicker from "expo-image-picker";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -15,19 +11,24 @@ export default function HomeScreen() {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleTakePhoto = async () => {
-    const { status } = await ImagePicker.requestCameraPermissionsAsync();
-    if (status !== "granted") {
-      Alert.alert("Permission required", "Camera access is needed to take photos.");
-      return;
-    }
-    const result = await ImagePicker.launchCameraAsync({
-      mediaTypes: ["images"],
-      quality: 0.9,
-      allowsEditing: false,
-    });
-    if (!result.canceled) {
-      // TODO: Navigate to processing screen with result.assets[0]
-      Alert.alert("Photo captured", "AI processing coming soon.");
+    try {
+      const { status } = await ImagePicker.requestCameraPermissionsAsync();
+      if (status !== "granted") {
+        Alert.alert("Permission required", "Camera access is needed to take photos.");
+        return;
+      }
+      const result = await ImagePicker.launchCameraAsync({
+        mediaTypes: ["images"],
+        quality: 0.9,
+        allowsEditing: false,
+      });
+      if (!result.canceled) {
+        // TODO: Navigate to processing screen with result.assets[0]
+        Alert.alert("Photo captured", "AI processing coming soon.");
+      }
+    } catch {
+      // Camera unavailable on simulator — expected
+      Alert.alert("Camera unavailable", "Use a physical device to take photos, or import from gallery.");
     }
   };
 
